@@ -6,6 +6,9 @@ COMMIT_MESSAGE="${1:?"Specify the commit message"}"
 AUTHOR_NAME="${2:-""}"
 AUTHOR_EMAIL="${3:-""}"
 
+# Pass this as an environment variable only.
+GITHUB_TOKEN="${GITHUB_TOKEN:-""}"
+
 if ([ -n "$AUTHOR_NAME" ] && [ -z "$AUTHOR_EMAIL"]) || ( [ -z "$AUTHOR_NAME" ] && [ -n "$AUTHOR_EMAIL" ])
 then
     echo "Either both AUTHOR_NAME and AUTHOR_EMAIL must be defined, or neither should be"
@@ -54,10 +57,11 @@ git config user.email "$AUTHOR_EMAIL"
 git add .
 git commit --message "$COMMIT_MESSAGE"
 
+set -x
+
 if [ -z "$GITHUB_TOKEN" ]
 then
     echo "Using dedicated credentials to push changes..."
-    set -x
     # If a specific credentials has been provided, use it explicitly instead of relying on the ambiant credentials.
     git -c credential.helper= \
         -c credential.helper='!f() { echo username=x-access-token; echo "password=${GITHUB_TOKEN}"; }; f' \

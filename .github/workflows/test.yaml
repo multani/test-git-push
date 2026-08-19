@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          persist-credentials: false
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0 # fetch all the branches, not only the current one

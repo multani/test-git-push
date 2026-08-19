@@ -25,6 +25,6 @@ jobs:
       - name: render
         run: make render
 
-      - uses: camunda/action-git-commit@v1
+      - uses: camunda/action-git-commit@fix/specific-token
         with:
           commit-message: Commit changes

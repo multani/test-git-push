@@ -67,6 +67,7 @@ then
         -c credential.helper='!f() { echo username=x-access-token; echo "password=${GITHUB_TOKEN}"; }; f' \
         push
 else
+    echo "Using ambiant credentials to push changes..."
     git push
 fi
 

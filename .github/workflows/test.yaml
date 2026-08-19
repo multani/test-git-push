@@ -30,4 +30,4 @@ jobs:
       - uses: ./.github/action
         with:
           commit-message: Commit changes
-          github-token: xxxx
+          github-token: ${{ secrets.GITHUB_TOKEN }}

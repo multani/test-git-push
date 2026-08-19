@@ -59,7 +59,7 @@ git commit --message "$COMMIT_MESSAGE"
 
 set -x
 
-if [ -z "$GITHUB_TOKEN" ]
+if [ -n "$GITHUB_TOKEN" ]
 then
     echo "Using dedicated credentials to push changes..."
     # If a specific credentials has been provided, use it explicitly instead of relying on the ambiant credentials.

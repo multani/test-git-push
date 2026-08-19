@@ -30,3 +30,4 @@ jobs:
       - uses: camunda/action-git-commit@fix/specific-token
         with:
           commit-message: Commit changes
+          github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-VALUE = test125
+VALUE = test126
 
 render:
 	echo "$(VALUE)" > output

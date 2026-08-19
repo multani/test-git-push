@@ -1,0 +1,24 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # fetch all the branches, not only the current one
+
+      - name: render
+        run: make render
+
+      - uses: camunda/action-git-commit@v1
+        with:
+          commit-message: Commit changes

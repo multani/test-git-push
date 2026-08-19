@@ -26,6 +26,8 @@ jobs:
       - name: render
         run: make render
 
-      - uses: camunda/action-git-commit@fix/specific-token
+      #- uses: camunda/action-git-commit@fix/specific-token
+      - uses: ./.github/action
         with:
           commit-message: Commit changes
+          github-token: ${{ secrets.GITHUB_TOKEN }}

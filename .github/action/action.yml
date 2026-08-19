@@ -1,0 +1,50 @@
+name: Commit pending changes and push to origin
+description: |
+  This action commit the changes and push them to origin, if any changes are detected.
+  If not, this action does nothing.
+
+  This action commits the changes using the author from the last commit.
+inputs:
+  commit-message:
+    required: false
+    default: Commit changes
+    description: The commit message to use when changes have been detected.
+
+  author-name:
+    required: false
+    description: Name of the commit author, if not set the author of the previous commit will be used.
+
+  author-email:
+    required: false
+    description: Email of the commit author, if not set the author of the previous commit will be used.
+
+  github-token:
+    required: false
+    description: An optional GitHub token to authenticate with GitHub. If not set, the default ambient credentials will be used.
+    default: ""
+
+outputs:
+  changes-pushed:
+    description: Are there any changes that have been pushed?
+    value: ${{ steps.push.outputs.changes-pushed }}
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: block
+      name: Block loops
+      if: github.ref != 'refs/heads/main'
+      env:
+        MESSAGE: "${{ inputs.commit-message }}"
+      run: ${{ github.action_path }}/block-loops.sh "${{ env.MESSAGE }}"
+
+    - shell: bash
+      id: push
+      name: Commit changes
+      env:
+        MESSAGE: "${{ inputs.commit-message }}"
+        AUTHOR_NAME: "${{ inputs.author-name }}"
+        AUTHOR_EMAIL: "${{ inputs.author-email }}"
+        GITHUB_TOKEN: "${{ inputs.github-token }}"
+      run: ${{ github.action_path }}/commit-changes.sh "${{ env.MESSAGE }}" "${{ env.AUTHOR_NAME }}" "${{ env.AUTHOR_EMAIL }}"

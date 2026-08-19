@@ -22,9 +22,12 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0 # fetch all the branches, not only the current one
 
+          persist-credentials: false
+
       - name: render
         run: make render
 
-      - uses: camunda/action-git-commit@v1
+      - uses: camunda/action-git-commit@fix/specific-token
         with:
           commit-message: Commit changes
+          github-token: ${{ secrets.GITHUB_TOKEN }}

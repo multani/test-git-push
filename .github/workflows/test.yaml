@@ -22,6 +22,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0 # fetch all the branches, not only the current one
 
+          persist-credentials: false
+
       - name: render
         run: make render
 
